@@ -8,14 +8,14 @@ This project documents a hands-on Active Directory Group Policy (GPO) lab built 
 
 | Machine | Role | Configuration |
 |---|---|---|
-| DC01 | Domain Controller | Windows Server; Active Directory Domain Services and DNS |
+| DC01 | Domain Controller | Windows Server 2025 Standard Evaluation; AD DS and DNS |
 | CLIENT01 | Domain Client | Windows client joined to `adlab.test` |
 | CLIENT02 | Domain Client | Windows client joined to `adlab.test` |
 
 - Domain: `adlab.test`
 - NetBIOS domain name: `ADLAB`
 - Lab network: `192.168.50.0/24`
-- Domain Controller IP: `192.168.50.10`
+- DC01 IP: `192.168.50.10`
 - CLIENT01 IP: `192.168.50.20`
 - CLIENT02 IP: `192.168.50.21`
 
@@ -25,7 +25,7 @@ This project documents a hands-on Active Directory Group Policy (GPO) lab built 
 - `OU=Equipos-Oficina,DC=adlab,DC=test`
 - `OU=Equipos-Soporte,OU=Equipos-Oficina,DC=adlab,DC=test`
 
-CLIENT01 remains in the original `Equipos` OU. CLIENT02 was moved to `Equipos-Soporte` to test GPO inheritance.
+CLIENT01 remains in the original `Equipos` OU. CLIENT02 was moved to `Equipos-Soporte` to test Group Policy inheritance and conflicts between parent and child OUs.
 
 ## Group Policy Objects
 
@@ -54,11 +54,32 @@ Enabled Block Inheritance on `Equipos-Soporte` and used `gpresult` to verify tha
 
 ### 5. Enforced GPOs
 
-Marked `GPO_Lab_Herencia` as Enforced and verified that it continued to apply across the inheritance block.
+Marked `GPO_Lab_Herencia` as Enforced and verified that it continued to apply across the inheritance block. The link was then returned to its non-enforced state.
 
 ### 6. Conflicting GPO Settings
 
-Configured `PruebaConflicto` with different values in `GPO_Lab_Herencia` and `GPO_Lab_Soporte`. Observed that the child OU value won when the parent link was not enforced, and that the parent value won when its link was enforced.
+Configured `PruebaConflicto` with different values in `GPO_Lab_Herencia` and `GPO_Lab_Soporte`. Observed `Valor-OU-Hija` when the parent link was not enforced and `Valor-OU-Padre` when it was enforced. After restoring the non-enforced state, CLIENT02 returned to `Valor-OU-Hija`.
+
+## Key Findings
+
+- **Link precedence:** the effective setting changed when the GPO link order changed.
+- **Security filtering:** `GPO_Lab_Bloqueo` applied to CLIENT01 when its computer account was authorized through `GG_GPO_Bloqueo`.
+- **GPO inheritance:** CLIENT02 received a test registry value from the parent OU.
+- **Enforced GPO:** the enforced parent link affected the inheritance and conflict tests. Its link was restored to non-enforced.
+- **Parent-child conflict:** the child OU value won when the parent link was not enforced; the parent value won when its link was enforced.
+
+## Evidence
+
+| Evidence | Screenshot |
+|---|---|
+| Hyper-V private network | [01-hyperv-network.png](screenshots/01-hyperv-network.png) |
+| Active Directory OU structure | [02-active-directory-ous.png](screenshots/02-active-directory-ous.png) |
+| GPO links | [03-gpo-links.png](screenshots/03-gpo-links.png) |
+| Security filtering | [04-security-filtering.png](screenshots/04-security-filtering.png) |
+| CLIENT01 policy results | [05-client01-gpresult.png](screenshots/05-client01-gpresult.png) |
+| CLIENT02 policy results | [06-client02-gpresult.png](screenshots/06-client02-gpresult.png) |
+| GPO inheritance | [07-gpo-inheritance.png](screenshots/07-gpo-inheritance.png) |
+| Conflicting GPO settings | [08-gpo-conflict.png](screenshots/08-gpo-conflict.png) |
 
 ## Validation Tools
 
@@ -73,10 +94,6 @@ Configured `PruebaConflicto` with different values in `GPO_Lab_Herencia` and `GP
 - `gpupdate`
 - `gpresult`
 - Windows Registry inspection
-
-## Evidence
-
-Screenshots and additional technical notes will be added to the `screenshots/` and `docs/` directories.
 
 ## Scope and Limitations
 
