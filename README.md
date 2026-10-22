@@ -81,6 +81,14 @@ Configured `PruebaConflicto` with different values in `GPO_Lab_Herencia` and `GP
 | GPO inheritance | [07-gpo-inheritance.png](screenshots/07-gpo-inheritance.png) |
 | Conflicting GPO settings | [08-gpo-conflict.png](screenshots/08-gpo-conflict.png) |
 
+## Technical Documentation
+
+- [Lab Architecture](docs/lab-architecture.md) — Lab network, virtual machines, and Active Directory structure.
+- [GPO Security Filtering](docs/security-filtering.md) — Security group filtering and observed results.
+- [GPO Link Precedence](docs/gpo-precedence.md) — Link order and effective policy settings.
+- [GPO Conflicts](docs/gpo-conflicts.md) — Parent and child OU policy conflicts.
+- [GPO Validation Procedures](docs/validation-procedures.md) — Commands to inspect applied policies and registry values.
+
 ## Validation Tools
 
 - PowerShell GroupPolicy module
