@@ -89,6 +89,12 @@ Get-GPInheritance -Target 'OU=Equipos-Oficina,DC=adlab,DC=test' |
     Select-Object DisplayName, Order, Enabled, Enforced
 ```
 
+```powershell
+Get-GPInheritance -Target 'OU=Equipos-Soporte,OU=Equipos-Oficina,DC=adlab,DC=test' |
+    Select-Object -ExpandProperty GpoLinks |
+    Select-Object DisplayName, Order, Enabled, Enforced
+```
+
 Review direct links, inherited links, and whether inheritance is blocked. Check enforced status separately when needed:
 
 ```powershell
