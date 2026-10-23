@@ -80,6 +80,7 @@ Configured `PruebaConflicto` with different values in `GPO_Lab_Herencia` and `GP
 | CLIENT02 policy results | [06-client02-gpresult.png](screenshots/06-client02-gpresult.png) |
 | GPO inheritance | [07-gpo-inheritance.png](screenshots/07-gpo-inheritance.png) |
 | Conflicting GPO settings | [08-gpo-conflict.png](screenshots/08-gpo-conflict.png) |
+| CLIENT02 registry validation | [09-client02-registry-validation.png](screenshots/09-client02-registry-validation.png) |
 
 ## Technical Documentation
 
