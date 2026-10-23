@@ -53,6 +53,43 @@ The parent link was restored to `Enforced = False`.
 
 The inheritance block on `Equipos-Soporte` was also disabled, leaving inheritance enabled.
 
+## Current Link State
+
+The final configuration was verified on DC01:
+
+| OU | GPO link | Order | Enabled | Enforced |
+|---|---|---:|---|---|
+| `Equipos-Oficina` (parent) | `GPO_Lab_Herencia` | 1 | True | False |
+| `Equipos-Soporte` (child) | `GPO_Lab_Soporte` | 1 | True | False |
+
+Inheritance on `Equipos-Soporte` was verified as enabled (`GpoInheritanceBlocked = False`).
+
+## Reproducing the Conflict Test
+
+Run the following commands on DC01 to inspect the direct links:
+
+```powershell
+Get-GPInheritance -Target 'OU=Equipos-Oficina,DC=adlab,DC=test' |
+    Select-Object -ExpandProperty GpoLinks |
+    Select-Object DisplayName, Order, Enabled, Enforced
+
+Get-GPInheritance -Target 'OU=Equipos-Soporte,OU=Equipos-Oficina,DC=adlab,DC=test' |
+    Select-Object -ExpandProperty GpoLinks |
+    Select-Object DisplayName, Order, Enabled, Enforced
+```
+
+On CLIENT02, refresh computer policy and inspect the effective registry value:
+
+```powershell
+gpupdate /target:computer /force
+
+Get-ItemPropertyValue -Path 'HKLM:\SOFTWARE\GPO-Lab' -Name 'PruebaConflicto'
+```
+
+With the parent link not enforced, the observed value was `Valor-OU-Hija`. During the earlier enforced-link test, the observed value was `Valor-OU-Padre`. After restoring the parent link to `Enforced = False`, the observed value returned to `Valor-OU-Hija`.
+
+These results document the effective value observed in this lab. They do not replace inspection of the GPO settings and link configuration.
+
 ## Key Takeaways
 
 - GPO link precedence affects which conflicting setting is effective.
