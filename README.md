@@ -42,7 +42,7 @@ Configured the same registry value in two GPOs linked to the same OU. Changed th
 
 ### 2. Security Filtering
 
-Configured `GPO_Lab_Bloqueo` to apply to computers in `GG_GPO_Bloqueo`. Verified that CLIENT01 applied the GPO and CLIENT02 was denied by security filtering while it remained in the original OU.
+Configured `GPO_Lab_Bloqueo` to apply to computer accounts in `GG_GPO_Bloqueo`. Verified that CLIENT01 was a member of the group and applied the GPO. CLIENT02 was not a member of the group, and the GPO did not appear in its final applied GPO report.
 
 ### 3. GPO Inheritance
 
@@ -50,7 +50,7 @@ Linked `GPO_Lab_Herencia` to `Equipos-Oficina` and verified that CLIENT02 receiv
 
 ### 4. Block Inheritance
 
-Enabled Block Inheritance on `Equipos-Soporte` and used `gpresult` to verify that non-enforced inherited GPOs were not applied.
+Enabled Block Inheritance on `Equipos-Soporte` and used `gpresult` to validate the effect on inherited, non-enforced GPOs. The inheritance configuration was subsequently restored for the final parent-child conflict tests.
 
 ### 5. Enforced GPOs
 
