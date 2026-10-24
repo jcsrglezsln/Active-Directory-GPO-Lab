@@ -28,7 +28,7 @@ The GPO was configured with the following permissions:
 ## Observed Results
 
 - CLIENT01 applied `GPO_Lab_Bloqueo` while its computer account was included in `GG_GPO_Bloqueo`.
-- CLIENT02 was denied the GPO by security filtering when it was in the original `Equipos` OU and was not a member of the group.
+- CLIENT02 was not a member of `GG_GPO_Bloqueo`, and `GPO_Lab_Bloqueo` did not appear in its applied GPO report while it was in the original `Equipos` OU. This result was consistent with the configured security filter.
 - CLIENT02 was later moved to `OU=Equipos-Soporte,OU=Equipos-Oficina,DC=adlab,DC=test`. Its current policy results must be evaluated according to its current OU and the GPO links there.
 
 ## Key Learning
