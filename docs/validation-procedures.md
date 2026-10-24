@@ -112,14 +112,13 @@ $inheritance.InheritedGpoLinks |
 $inheritance.GpoInheritanceBlocked
 ```
 
-Check enforced status separately when needed:
+Check the enforced status of the parent OU's direct GPO links:
 
 ```powershell
-Get-GPO -Name 'GPO_Lab_Herencia' |
-    Select-Object DisplayName, Id, GpoStatus
+Get-GPInheritance -Target 'OU=Equipos-Oficina,DC=adlab,DC=test' |
+    Select-Object -ExpandProperty GpoLinks |
+    Select-Object DisplayName, Order, Enabled, Enforced
 ```
-
-`Get-GPO` reports GPO metadata; inspect the link on the relevant OU in Group Policy Management or use the appropriate GPO link cmdlets to confirm link-specific settings such as enforcement.
 
 ## 6. Troubleshooting Checklist
 
