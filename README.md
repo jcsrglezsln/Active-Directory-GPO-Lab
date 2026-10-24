@@ -42,7 +42,7 @@ Configured the same registry value in two GPOs linked to the same OU. Changed th
 
 ### 2. Security Filtering
 
-Configured `GPO_Lab_Bloqueo` to apply to computer accounts in `GG_GPO_Bloqueo`. Verified that CLIENT01 was a member of the group and applied the GPO. CLIENT02 was not a member of the group, and the GPO did not appear in its final applied GPO report.
+Configured `GPO_Lab_Bloqueo` to apply to computer accounts in `GG_GPO_Bloqueo`. Verified that CLIENT01 was a member of the group and applied the GPO. CLIENT02 was not a member of the group, and the GPO did not appear in its applied GPO report while it was in the original `Equipos` OU. CLIENT02 was subsequently moved to `Equipos-Soporte`, where its current policy results depend on the GPO links and security permissions applicable to that OU.
 
 ### 3. GPO Inheritance
 
